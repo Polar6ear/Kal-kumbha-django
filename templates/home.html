@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-intro padding-y-sm">
+<div class="container">
+
+<div class="intro-banner-wrap">
+	<img src="{% static 'images/banners/1.jpg'%}" class="img-fluid rounded">
+</div>
+
+</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+<div class="container">
+
+<header class="section-heading">
+	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
+	<h3 class="section-title">Popular products</h3>
+</header><!-- sect-heading -->
+
+<!-- box design start  -->
+<div class="row">
+  {% for product in products %}
+  <div class="col-md-3 mb-4">
+    <div class="card h-100 border-0" style="border-radius: 18px; background-color: #fdf8f2; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 12px rgba(156, 102, 31, 0.08);">
+
+      <a href="{{ product.get_url }}" class="img-wrap" style="border-top-left-radius: 18px; border-top-right-radius: 18px; overflow: hidden;">
+        <img src="{{ product.images.url }}" class="card-img-top" style="height: 240px; object-fit: cover; transition: transform 0.3s ease;" alt="{{ product.product_name }}">
+      </a>
+
+      <div class="card-body text-center px-3 py-3">
+        <h5 class="card-title" style="font-family: 'Playfair Display', serif; color: #5e3b23; font-size: 1.1rem;">
+          {{ product.product_name }}
+        </h5>
+        <p class="card-text mb-2" style="color: #8b5e3c; font-weight: 600; font-size: 1rem;">₹ {{ product.price }}</p>
+        <a href="./product-detail.html" class="btn btn-outline-secondary btn-sm" style="border-radius: 25px; font-size: 0.85rem; color: #6d4c2d; border-color: #c7a17a;">View Details</a>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+.card:hover .card-img-top {
+  transform: scale(1.04);
+}
+
+.btn-outline-secondary:hover {
+  background-color: #c7a17a;
+  color: white !important;
+  border-color: #c7a17a;
+}
+</style>
+<!-- box design end -->
+
+</section>
+<!-- ========================= SECTION  END// ========================= -->
+
+</body>
+</html>
+{% endblock %}
