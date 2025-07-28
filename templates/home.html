@@ -37,7 +37,7 @@
           {{ product.product_name }}
         </h5>
         <p class="card-text mb-2" style="color: #8b5e3c; font-weight: 600; font-size: 1rem;">₹ {{ product.price }}</p>
-        <a href="./product-detail.html" class="btn btn-outline-secondary btn-sm" style="border-radius: 25px; font-size: 0.85rem; color: #6d4c2d; border-color: #c7a17a;">View Details</a>
+        <a href="{% url 'store' %}" class="btn btn-outline-secondary btn-sm" style="border-radius: 25px; font-size: 0.85rem; color: #6d4c2d; border-color: #c7a17a;">View Details</a>
       </div>
 
     </div>
