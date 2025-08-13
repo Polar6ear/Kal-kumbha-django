@@ -37,6 +37,15 @@
           {{ product.product_name }}
         </h5>
         <p class="card-text mb-2" style="color: #8b5e3c; font-weight: 600; font-size: 1rem;">₹ {{ product.price }}</p>
+        <div class="rating-star">
+          <span>
+            <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+            <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+            <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+            <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+            <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+          </span>
+		    </div>
         <a href="{% url 'store' %}" class="btn btn-outline-secondary btn-sm" style="border-radius: 25px; font-size: 0.85rem; color: #6d4c2d; border-color: #c7a17a;">View Details</a>
       </div>
 

@@ -34,15 +34,15 @@ class Product(models.Model):
             avg = float(reviews['average'])
         return avg
 class VariationManager(models.Manager):
-    def colors(self):
-        return super(VariationManager, self).filter(variation_category='color', is_active=True)
+    def genders(self):
+        return super(VariationManager, self).filter(variation_category='gender', is_active=True)
 
-    def sizes(self):
-        return super(VariationManager, self).filter(variation_category='size', is_active=True)
+    def forms(self):
+        return super(VariationManager, self).filter(variation_category='form', is_active=True)
 
 variation_category_choice = {
-    ('color', 'color'),
-    ('size', 'size'),
+    ('gender', 'gender'),
+    ('form', 'form'),
 }
 class Variation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -68,3 +68,15 @@ class ReviewRating(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='store/products', max_length=255)
+
+    def __str__(self):
+        return self.product.product_name
+    
+    class Meta:
+        verbose_name = 'product_gallery'
+        verbose_name_plural = 'product_gallery'
