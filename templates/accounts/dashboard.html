@@ -1,45 +1,305 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-conten padding-y bg">
-{% include 'includes/alerts.html' %}
-<div class="container">
+<section class="ps-dash-wrap">
+  {% include 'includes/alerts.html' %}
+  <div class="container">
     <div class="row">
-        {% include 'includes/dashboard_sidebar.html' %}
-        <main class="col-md-9">
-            <article class="card">
-                <header class="card-header">
-                    <strong class="d-inline-block mr-3">Logged in as:</strong>
-                    <span>{{ user.full_name }}</span>
-                </header>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card" style="text-align:center;">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total Orders</h5>
-                                    <h4>{{ orders_count }}</h4>
-                                    <a href="{% url 'my_orders' %}">view orders</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card" style="text-align:center;">
-                                <div class="card-body">
-                                    <img src="{{ userprofile.profile_picture.url }}" alt="avatar" width="50" height="50" style="border-radius:50%;">
-                                    <p class="mb-0">{{ user.email }}</p>
-                                    <p>{{ user.phone_number }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- row ka close -->
-                </div> <!-- card-body ka close -->
-            </article>
-        </main>
-    </div> <!-- row ka close -->
-</div> <!-- container ka close -->
+      {% include 'includes/dashboard_sidebar.html' %}
+
+      <main class="col-md-9">
+        <article class="card ps-dash-card">
+          <!-- HEADER -->
+          <header class="card-header ps-dash-header">
+            <div class="ps-dash-id">
+              <div class="ps-avatar">
+                {% if userprofile.profile_picture %}
+                  <img src="{{ userprofile.profile_picture.url }}" alt="avatar">
+                {% else %}
+                  <img src="{% static 'images/default_profile.png' %}" alt="avatar">
+                {% endif %}
+              </div>
+              <div class="ps-id-text">
+                <div class="ps-id-top">
+                  <span class="ps-chip">Trainer</span>
+                  <span class="ps-chip ps-chip--legend">PokéStore+</span>
+                </div>
+                <h5 class="ps-name">Logged in as: <strong>{{ user.full_name }}</strong></h5>
+                <p class="ps-meta">{{ user.email }} • {{ user.phone_number }}</p>
+              </div>
+            </div>
+            <div class="ps-dash-brand">
+              <span class="ps-logo">Poké<span>Store</span></span>
+            </div>
+          </header>
+
+          <!-- BODY -->
+          <div class="card-body ps-dash-body">
+            <div class="row g-4">
+              
+              <!-- Orders -->
+              <div class="col-md-6">
+                <div class="ps-stat ps-stat--orders">
+                  <div class="ps-stat-head">
+                    <div class="ps-stat-icon"><i class="fa fa-shopping-bag"></i></div>
+                    <span class="ps-stat-title">Total Orders</span>
+                  </div>
+                  <div class="ps-stat-value">{{ orders_count }}</div>
+                  <a href="{% url 'my_orders' %}" class="ps-btn ps-btn--primary">View Orders</a>
+                  <div class="ps-pokeball"></div>
+                </div>
+              </div>
+
+              <!-- Account -->
+              <div class="col-md-6">
+                <div class="ps-stat ps-stat--account">
+                  <div class="ps-stat-head">
+                    <div class="ps-stat-icon"><i class="fa fa-id-card"></i></div>
+                    <span class="ps-stat-title">Account Status</span>
+                  </div>
+                  <div class="ps-stat-value">Active</div>
+                  <div class="ps-badges">
+                    <span class="ps-badge">Verified Email</span>
+                    <span class="ps-badge ps-badge--blue">Member</span>
+                  </div>
+                  <div class="ps-pokeball"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<style>
+:root {
+  --poke-red: #e3350d;
+  --poke-yellow: #ffcb05;
+  --poke-blue: #3b4cca;
+  --ink: #1b1b1f;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --bg: #f5f7fb;
+  --ring: 0 8px 24px rgba(0,0,0,.06);
+  --font-stack: 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body, h1, h2, h3, h4, h5, h6, p, span { font-family: var(--font-stack); }
+
+.ps-dash-wrap {
+  background:
+    radial-gradient(1200px 600px at -10% -10%, rgba(255,203,5,.12), transparent 60%),
+    radial-gradient(800px 400px at 110% 10%, rgba(59,76,202,.12), transparent 60%),
+    linear-gradient(180deg, #fafbff, #f4f6fb);
+  padding: 24px 0 36px;
+}
+
+/* Card Shell */
+.ps-dash-card {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--ring);
+  background: var(--card);
+}
+
+/* Header */
+.ps-dash-header {
+  background: linear-gradient(135deg, var(--poke-blue) 0%, var(--poke-red) 100%);
+  color: #fff;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ps-dash-id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ps-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.9);
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,.2);
+  background: #fff;
+}
+.ps-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.ps-id-top {
+  display: flex; gap: 8px; margin-bottom: 4px;
+}
+
+.ps-chip {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+  font-size: .75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.35);
+}
+.ps-chip--legend {
+  background: rgba(255,203,5,.25);
+  border-color: rgba(255,203,5,.6);
+  color: #111;
+}
+
+.ps-name {
+  margin: 0; font-weight: 700; letter-spacing: .2px; font-size: 1rem;
+}
+.ps-meta {
+  margin: 2px 0 0;
+  opacity: .85;
+  font-size: .85rem;
+}
+
+.ps-dash-brand .ps-logo {
+  font-weight: 900;
+  letter-spacing: .5px;
+  font-size: 1.25rem;
+}
+.ps-dash-brand .ps-logo span { color: var(--poke-yellow); }
+
+/* Body */
+.ps-dash-body {
+  padding: 24px;
+  background: var(--card);
+}
+
+/* Stat Cards */
+.ps-stat {
+  position: relative;
+  border-radius: 16px;
+  padding: 18px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, .05);
+  overflow: hidden;
+  min-height: 170px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.ps-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(17, 24, 39, .12);
+}
+
+.ps-stat--orders {
+  background: linear-gradient(180deg, #fff6ec 0%, #ffffff 60%);
+  border: 1px solid #ffe0c2;
+}
+.ps-stat--account {
+  background: linear-gradient(180deg, #edf6ff 0%, #ffffff 60%);
+  border: 1px solid #cfe7ff;
+}
+
+.ps-stat-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.ps-stat-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.06);
+  font-size: 1.2rem;
+}
+.ps-stat--orders .ps-stat-icon { color: #bf360c; }
+.ps-stat--account .ps-stat-icon { color: #0d47a1; }
+.ps-stat-title { font-weight: 700; color: var(--ink); font-size: .95rem; }
+
+.ps-stat-value {
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 2px 0 12px;
+  color: var(--ink);
+}
+
+/* Buttons */
+.ps-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  font-weight: 800;
+  font-size: .88rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: .2s ease;
+  border: 2px solid transparent;
+}
+.ps-btn--primary {
+  background: var(--poke-yellow);
+  color: #111;
+  border-color: #1112;
+  box-shadow: 0 6px 12px rgba(255,203,5,.35);
+}
+.ps-btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 16px rgba(255,203,5,.45);
+}
+
+/* Badges */
+.ps-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.ps-badge {
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff8e1;
+  color: #6d4c41;
+  border: 1px solid #ffe0a3;
+}
+.ps-badge--blue {
+  background: #e3f2fd;
+  color: #0d47a1;
+  border-color: #bbdefb;
+}
+
+/* Decorative Pokéball */
+.ps-pokeball {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #fff 35%, transparent 36%),
+    linear-gradient(#fff 0 0) 0 49%/100% 10% no-repeat,
+    radial-gradient(circle at 50% 50%, #fff 20%, transparent 21%),
+    linear-gradient(#111 0 0) 0 50%/100% 10% no-repeat,
+    radial-gradient(circle at 50% 50%, #111 8%, transparent 9%),
+    linear-gradient(var(--poke-red), var(--poke-red));
+  filter: blur(.4px);
+  opacity: .1;
+  z-index: -1;
+  box-shadow: inset 0 0 0 6px rgba(0,0,0,.04);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .ps-dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ps-avatar {
+    width: 56px;
+    height: 56px;
+  }
+}
+</style>
+
 {% endblock %}

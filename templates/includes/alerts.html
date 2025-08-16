@@ -1,13 +1,59 @@
 {% if messages %}
-<ul class="messages">
+<ul class="messages ps-messages">
     {% for message in messages %}
-    <div id="message" class="container">
-        <div{% if message.tags %} class="alert alert-{{message.tags}}"{% endif %} role="alert">
-            <button><span aria-hidden="true" class="close" type="button" data-dismiss="alert"></span>&times;</button>
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-            {{ message }}
+    <li class="ps-message-item">
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+            <span class="ps-message-text">
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}⚠️ {% endif %}
+                {{ message }}
+            </span>
+            <button type="button" class="ps-close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
         </div>
-    </div>
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
+
+<style>
+.ps-messages {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+.ps-message-item {
+    margin-bottom: 10px;
+    position: relative;
+}
+.ps-messages .alert {
+    background: #fff8e1;
+    color: #6d4c41;
+    border-left: 4px solid #ffcb05;
+    border-radius: 10px;
+    padding: 12px 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+.ps-messages .alert:hover {
+    transform: translateY(-1px);
+}
+.ps-close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #3b4cca;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+.ps-close-btn:hover {
+    color: #e3350d;
+}
+.ps-message-text {
+    flex-grow: 1;
+}
+</style>

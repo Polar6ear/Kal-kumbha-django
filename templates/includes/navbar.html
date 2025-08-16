@@ -1,92 +1,302 @@
 {% load static %}
-<header class="section-header">
-<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-<div class="container">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTop4">
-    <ul class="navbar-nav mr-auto">
-    	<li class="nav-item dropdown">
-		 	<a href="#" class="nav-link">   English </a>
-		</li>
-		<li class="nav-item dropdown">
-			<a href="#" class="nav-link"> USD </a>
-		</li>
-    </ul>
-    <ul class="navbar-nav">
-		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
-		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
-	</ul> <!-- list-inline //  -->
-  </div> <!-- navbar-collapse .// -->
-</div> <!-- container //  -->
-</nav>
 
-<section class="header-main border-bottom">
-	<div class="container">
-<div class="row align-items-center">
-	<div class="col-lg-2 col-md-3 col-6">
-		<a href="{% url 'home' %}" class="brand-wrap">
-			<img class="logo" src="{% static './images/logo.png' %}">
-		</a> <!-- brand-wrap.// -->
-	</div>
-	<div class="col-lg col-sm col-md col-6 flex-grow-0">
-		<div class="category-wrap dropdown d-inline-block float-right">
-			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-				<i class="fa fa-bars"></i> All category 
-			</button>
-			<div class="dropdown-menu">
-				{% for category in links %}
-				<a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
-				{% endfor %}
-			</div>
-		</div>  <!-- category-wrap.// -->
-	</div> <!-- col.// -->
-	<a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
-	<div class="col-lg  col-md-6 col-sm-12 col">
-		<form action="{% url 'search' %}" class="search" method="GET">
-			<div class="input-group w-100">
-			    <input type="text" class="form-control" style="width:60%;" placeholder="Search", name="keyword">
-			    
-			    <div class="input-group-append">
-			      <button class="btn btn-primary" type="submit">
-			        <i class="fa fa-search"></i>
-			      </button>
-			    </div>
-		    </div>
-		</form> <!-- search-wrap .end// -->
-	</div> <!-- col.// -->
-	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-				<div class="d-flex justify-content-end mb-3 mb-lg-0">
-					{% if user.id is None %}
-					<div class="widget-header">
-						<small class="title text-muted">Welcome guest!</small>
-						<div> 
-							<a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
-							<a href="{% url 'register' %}"> Register</a>
-						</div>
-					</div>
-					{% else %}
-						<div class="widget-header">
-							<small class="title text-muted">Welcome {{ user.first_name }}</small>
-							<div>
-								<a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
-								<a href="{% url 'logout' %}"> Logout </a>
+<header class="ps-header">
 
+  <!-- Top Bar -->
+  <div class="ps-topbar">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap">
+      <div class="ps-topbar-left d-flex align-items-center">
+        <a href="#" class="ps-top-link">🌐 English</a>
+        <a href="#" class="ps-top-link">💰 USD</a>
+      </div>
+      <div class="ps-topbar-right d-flex align-items-center">
+        <a href="#" class="ps-top-link"><i class="fa fa-envelope"></i> Support</a>
+        <a href="#" class="ps-top-link"><i class="fa fa-phone"></i> Call Us</a>
+      </div>
+    </div>
+  </div>
 
-							</div>
-					<a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
-						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-						<span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
-					</a>
-					{% endif %}
-				</div> <!-- widgets-wrap.// -->
-			</div> <!-- col.// -->
-</div> <!-- row.// -->
-	</div> <!-- container.// -->
-</section> <!-- header-main .// -->
+  <!-- Main Navbar -->
+  <div class="ps-navbar">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap">
 
+      <!-- Branding -->
+      <a href="{% url 'home' %}" class="ps-brand">
+        Poké<span>Store</span>
+      </a>
 
+      <!-- Nav Links -->
+      <nav class="ps-nav d-none d-lg-flex">
+        <a href="{% url 'home' %}">Home</a>
+        <div class="ps-dropdown">
+          <a href="#">Categories ▾</a>
+          <div class="ps-dropdown-menu">
+            {% for category in links %}
+              <a href="{{ category.get_url }}">{{ category.category_name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <a href="{% url 'store' %}">Store</a>
+        <a href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
+      </nav>
 
+      <!-- Search -->
+      <form action="{% url 'search' %}" method="GET" class="ps-search d-none d-lg-flex">
+        <input type="text" name="keyword" placeholder="Search Pokémon...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
 
-</header> <!-- section-header.// -->
+      <!-- User Menu -->
+      <div class="ps-user d-none d-lg-flex">
+        {% if user.id is None %}
+          <a href="{% url 'login' %}" class="ps-btn ghost">Sign In</a>
+          <a href="{% url 'register' %}" class="ps-btn primary">Register</a>
+        {% else %}
+          <div class="ps-user-info">
+            <span class="ps-user-hi">Hi, {{ user.first_name }}</span>
+            <a href="{% url 'dashboard' %}" class="ps-btn ghost">Dashboard</a>
+            <a href="{% url 'logout' %}" class="ps-btn primary">Logout</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="ps-mobile-btn d-lg-none" onclick="toggleMenu()">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="ps-backdrop" onclick="toggleMenu()"></div>
+  <div class="ps-mobile-menu">
+    <a href="{% url 'home' %}">Home</a>
+    {% for category in links %}
+      <a href="{{ category.get_url }}">{{ category.category_name }}</a>
+    {% endfor %}
+    <a href="{% url 'store' %}">Store</a>
+    <a href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
+    {% if user.id is None %}
+      <a href="{% url 'login' %}">Sign In</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% else %}
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% endif %}
+  </div>
+
+</header>
+
+<style>
+:root {
+  --poke-red: #cc0000;
+  --poke-yellow: #ffcb05;
+  --poke-blue: #3b4cca;
+  --white: #fff;
+  --dark: #222;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  --radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+/* Topbar */
+.ps-topbar {
+  background: var(--poke-red);
+  padding: 6px 0;
+  font-size: 0.85rem;
+}
+.ps-top-link {
+  color: var(--white);
+  margin: 0 10px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+.ps-top-link:hover {
+  color: var(--poke-yellow);
+}
+
+/* Navbar */
+.ps-navbar {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.ps-brand {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--poke-red);
+  text-decoration: none;
+}
+.ps-brand span {
+  color: var(--poke-yellow);
+}
+.ps-brand:hover {
+  transform: scale(1.05);
+  transition: var(--transition);
+}
+
+/* Nav Links */
+.ps-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.ps-nav a {
+  color: var(--dark);
+  font-weight: 600;
+  transition: var(--transition);
+}
+.ps-nav a:hover {
+  color: var(--poke-red);
+}
+
+/* Dropdown */
+.ps-dropdown {
+  position: relative;
+}
+.ps-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: none;
+  min-width: 160px;
+}
+.ps-dropdown:hover .ps-dropdown-menu {
+  display: block;
+}
+.ps-dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: var(--dark);
+}
+.ps-dropdown-menu a:hover {
+  background: var(--poke-yellow);
+  color: var(--poke-red);
+}
+
+/* Search */
+.ps-search {
+  border: 2px solid black;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.ps-search input {
+  border: none;
+  padding: 8px 12px;
+  outline: none;
+}
+.ps-search button {
+  background: var(--poke-red);
+  color: var(--white);
+  border: none;
+  padding: 0 12px;
+}
+.ps-search button:hover {
+  background: var(--poke-yellow);
+  color: var(--dark);
+}
+
+/* Buttons */
+.ps-btn {
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+.ps-btn.primary {
+  background: var(--poke-red);
+  color: var(--white);
+}
+.ps-btn.primary:hover {
+  background: var(--poke-yellow);
+  color: var(--dark);
+}
+.ps-btn.ghost {
+  border: 2px solid var(--poke-blue);
+  color: black;
+  background: var(--poke-yellow);
+}
+.ps-btn.ghost:hover {
+  background: var(--poke-);
+  color: var(--dark);
+}
+
+/* User Menu Fix */
+.ps-user {
+  display: flex;
+  align-items: center;
+}
+.ps-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ps-user-hi {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+/* Mobile Menu */
+.ps-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+}
+.ps-mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 240px;
+  height: 100%;
+  background: var(--white);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+.ps-mobile-menu a {
+  color: var(--dark);
+  font-weight: 600;
+}
+body.menu-open .ps-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+body.menu-open .ps-mobile-menu {
+  left: 0;
+}
+.ps-mobile-btn {
+  font-size: 1.4rem;
+  color: var(--poke-blue);
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .ps-nav, .ps-search, .ps-user {
+    display: none;
+  }
+}
+</style>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('menu-open');
+}
+</script>

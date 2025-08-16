@@ -1,14 +1,51 @@
 <aside class="col-md-3">
     <!-- SIDEBAR -->
-    <ul class="list-group">
-        <a class="list-group-item {% if '/accounts/' in request.path %}active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
-        <a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}"> My Orders </a>
-        <a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
-        <a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+    <ul class="list-group ps-sidebar">
+        <a class="list-group-item {% if '/accounts/' in request.path %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+        <a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}">My Orders</a>
+        <a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}">Change Password</a>
     </ul>
     <br>
-    <a class="btn btn-light btn-block" href="{% url 'logout' %}">
+    <a class="btn btn-light btn-block ps-logout-btn" href="{% url 'logout' %}">
         <i class="fa fa-power-off"></i> 
         <span class="text">Log out</span>
-    </a> 
+    </a>
 </aside>
+
+<style>
+/* Sidebar Styling */
+.ps-sidebar .list-group-item {
+    background: #f5f7fb;
+    color: #3b4cca;
+    font-weight: 600;
+    margin-bottom: 4px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+.ps-sidebar .list-group-item.active,
+.ps-sidebar .list-group-item:hover {
+    background: #3b4cca;
+    color: #ffcb05;
+    transform: translateX(2px);
+}
+
+/* Logout Button */
+.ps-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ffcb05;
+    color: #3b4cca;
+    font-weight: 700;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+.ps-logout-btn:hover {
+    background: #3b4cca;
+    color: #ffcb05;
+    transform: translateY(-1px);
+}
+</style>

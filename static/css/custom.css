@@ -36,6 +36,7 @@ input:checked ~ label, label:hover ~ label{
 }
 
 /* have highlight */
+
 input:checked + label:hover,
 input:checked ~ label:hover,
 input:checked ~ label:hover ~ label,

@@ -2,83 +2,104 @@
 {% load static %}
 {% block content %}
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-conten padding-y bg">
-{% include 'includes/alerts.html' %}
-<div class="container">
-	<div class="row">
-		{% include 'includes/dashboard_sidebar.html' %}
-	<main class="col-md-9">
-		<article class="card">
-		<header class="card-header">
-			<strong class="d-inline-block mr-3">Edit your Profile</strong>
-		</header>
-		<div class="card-body">
-			<div class="text-right">
-				{% if userprofile.profile_picture %}
-					<img src="{{ userprofile.profile_picture.url }}" alt="Profile Picture" width="100" style="border-radius:50px;">
-				{% else %}
-					<img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture" width="100" style="border-radius:50px;">
-				{% endif %}
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
-						{% csrf_token %}
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label>First Name</label>
-								{{ user_form.first_name }}
-							</div>
-							<div class="form-group col-md-6">
-								<label>Last Name</label>
-								{{ user_form.last_name }}
-							</div>
-						</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label>Phone Number</label>
-							{{ user_form.phone_number }}
-						</div>
-						<div class="form-group col-md-6">
-							<label>Profile Picture</label>
-							{{ profile_form.profile_picture }}
-						</div>
-					</div>
-						<div class="form-group">
-							<label>Address Line 1</label>
-							{{ profile_form.address_line_1}}
-						</div>
-						<div class="form-group">
-							<label>Address Line 2</label>
-							{{ profile_form.address_line_2}}
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label>City</label>
-								{{ profile_form.city}}
+<section class="ps-profile-wrap">
+    {% include 'includes/alerts.html' %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% include 'includes/dashboard_sidebar.html' %}
 
-							</div>
-							<div class="form-group col-md-4">
-								<label>State</label>
-								{{ profile_form.state}}
-							</div>
-							<div class="form-group col-md-4">
-								<label>Country</label>
-								{{ profile_form.country}}
+            <main class="col-lg-8">
+                <article class="card ps-profile-card">
+                    <header class="card-header ps-profile-header">
+                        <strong>Edit Your Profile</strong>
+                    </header>
+                    <div class="card-body ps-profile-body">
 
-							</div>
-						</div>
-						<input type="submit" value="Save" class="btn btn-primary">
-					</form>
-				</div>
-		</div> <!-- card-body .// -->
-		</article> <!-- order-group.// --> 
-	</main>
-</div> <!-- row.// -->
-</div>
+                        <!-- Profile Picture Preview -->
+                        <div class="ps-profile-picture mb-4 text-center">
+                            {% if userprofile.profile_picture %}
+                                <img src="{{ userprofile.profile_picture.url }}" alt="Profile Picture">
+                            {% else %}
+                                <img src="{% static 'images/default_profile.png' %}" alt="Default Profile Picture">
+                            {% endif %}
+                        </div>
 
+                        <!-- Form -->
+                        <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
 
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="first_name">First Name</label>
+                                    {{ user_form.first_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name">Last Name</label>
+                                    {{ user_form.last_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone_number">Phone Number</label>
+                                    {{ user_form.phone_number }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="profile_picture">Change Profile Picture</label>
+                                    {{ profile_form.profile_picture }}
+                                </div>
+                                <div class="col-12">
+                                    <label for="address_line_1">Address Line 1</label>
+                                    {{ profile_form.address_line_1 }}
+                                </div>
+                                <div class="col-12">
+                                    <label for="address_line_2">Address Line 2</label>
+                                    {{ profile_form.address_line_2 }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="city">City</label>
+                                    {{ profile_form.city }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="state">State</label>
+                                    {{ profile_form.state }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="country">Country</label>
+                                    {{ profile_form.country }}
+                                </div>
+                            </div>
+
+                            <div class="mt-3 text-center text-md-start">
+                                <input type="submit" value="Save Changes" class="ps-btn ps-btn--primary">
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<style>
+:root {
+    --primary-blue: #3b4cca;
+    --highlight-yellow: #ffcb05;
+    --card-bg: #ffffff;
+    --section-bg: #f5f7fb;
+    --text-dark: #1b1b1f;
+    --shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.ps-profile-wrap { background: var(--section-bg); padding: 30px 0; }
+.ps-profile-card { background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s ease; }
+.ps-profile-card:hover { transform: translateY(-1px); }
+.ps-profile-header { background: var(--primary-blue); color: var(--highlight-yellow); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.25rem; text-align: center; padding: 18px; letter-spacing: 0.5px; border-bottom: 3px solid var(--highlight-yellow); }
+.ps-profile-picture img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow); object-fit: cover; }
+form label { font-weight: 600; color: var(--text-dark); margin-bottom: 4px; display: block; font-size: 0.9rem; }
+form input, form select, form textarea { width: 100%; border-radius: 6px; border: 1px solid #ccc; padding: 8px 10px; font-size: 0.92rem; transition: all 0.2s ease; }
+form input:focus, form select:focus, form textarea:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 2px rgba(59,76,202,0.12); }
+.ps-btn { display: inline-block; padding: 10px 22px; font-weight: 600; font-size: 0.92rem; border-radius: 999px; cursor: pointer; border: none; transition: all 0.2s ease; }
+.ps-btn--primary { background: var(--primary-blue); color: var(--highlight-yellow); }
+.ps-btn--primary:hover { background: var(--highlight-yellow); color: var(--primary-blue); transform: translateY(-1px); }
+@media (max-width: 768px) { .ps-profile-picture { margin-bottom: 15px; } .ps-btn--primary { width: 100%; } }
+</style>
+
 {% endblock %}
