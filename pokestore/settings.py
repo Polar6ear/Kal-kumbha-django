@@ -29,6 +29,7 @@ DEBUG = config('DEBUG',default=True, cast=bool)
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -157,3 +158,6 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+print("=== USING CORRECT settings.py ===")
+print("ALLOWED_HOSTS =", ALLOWED_HOSTS)
